@@ -3,8 +3,12 @@
 
 ## Installation
 
+Add to ```package.json```
+```json
+"phraseapp-cli": "kununu/phraseapp-cli"
+```
 ```sh
-$ npm install --save-dev phraseapp-cli
+$ npm i
 ```
 ```sh
 $ npm link
