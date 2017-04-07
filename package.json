@@ -4,13 +4,9 @@
   "description": "",
   "main": "index.js",
   "bin": {
-    "phrase-cli": "index.js"
+    "phraseapp-cli": "index.js"
   },
-  "scripts": {
-    "wrap": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
+  "author": "kununu",
   "license": "Apache-2",
   "dependencies": {
     "colors": "^1.1.2",
