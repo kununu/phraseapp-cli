@@ -15,24 +15,38 @@ $ npm link
 ```
 ## Configuration file
 
-You have to use the ```.phraseapp.yml``` to store repeating command line arguments like [phraseapp-config]
+You have to use the ```.phraseapp.json``` to store repeating command line arguments like [phraseapp-config]
 
 **For example**:
-```yaml
-phraseapp:
-  access_token: YOUR_ACCESS_TOKEN
-  project_id: YOUR_PROJECT_ID
-  ```
+```json
+{
+  "access_token": "YOUR_ACCESS_TOKEN",
+  "project_id": "YOUR_PROJECT_ID",
+  "path": "YOUR_TRANSLATIONS_PATH",
+  "locales":[
+    {
+      "locale_id": "pl_PL",
+      "tags":[
+        "TAG1",
+        "TAG2",
+        "TAG3"
+      ]
+    },
+    {
+      "locale_id": "en_US"
+    }
+  ]
+}
 
+  ```
+## Config parameters
+ - locale_id (**required**) - for example **pl_PL**
+ - tags (*optional array*) - project tag
 ## Usage
 
 ```js
-phraseapp-cli locale tag
+phraseapp-cli
 ```
-
-## Parameters
- - locale (**required**) - for example **pl_PL**
- - tag (*optional*) - project tag
 
 
 ## License
