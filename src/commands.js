@@ -1,11 +1,37 @@
-const {getProject, fetchGivenLocales} = require('./helpers/api');
+const asyncLoop = require('node-async-loop');
+const {writeLocaleFile} = require('./helpers/utils');
+const {getProject, fetchLocale} = require('./helpers/api');
+
+const fetchAndSave = (config, projectID) =>
+  new Promise((resolve, reject) => {
+    asyncLoop(
+      config.LOCALES,
+      (locale, next) => {
+        fetchLocale(config, projectID, locale).then(data => {
+          writeLocaleFile(locale, config, data)
+            .then(data => {
+              console.log(data);
+              next();
+            })
+            .catch(e => {
+              console.log(e);
+              next(e);
+            });
+        });
+      },
+      err => {
+        if (err) {
+          reject(err);
+        }
+        resolve();
+      }
+    );
+  });
 
 const cmdDownload = async config => {
   try {
     const projectID = await getProject(config);
-    // const locales = await getLocale(config, projectID, config.LOCALES);
-    const locales = await fetchGivenLocales(config, projectID);
-    return locales;
+    await fetchAndSave(config, projectID);
   } catch (e) {
     console.log(e.message);
   }

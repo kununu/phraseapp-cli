@@ -1,8 +1,6 @@
 const request = require('request');
-const asyncLoop = require('node-async-loop');
 const {PHRASEAPP_BASEURL} = require('../constants');
 const {MESSAGES} = require('../constants');
-const {writeLocaleFile} = require('./utils');
 
 const endpoint = (endpoint, token) => ({
   url: `https://${token}@${PHRASEAPP_BASEURL}/${endpoint}`,
@@ -35,7 +33,7 @@ const getProject = config =>
     });
   });
 
-const getLocale = (config, projectID, locale) =>
+const fetchLocale = (config, projectID, locale) =>
   new Promise((resolve, reject) => {
     const localeEndpoint = endpoint(
       `projects/${projectID}/locales/${locale}/download?file_format=${config.FORMAT}`, // eslint-disable-line
@@ -50,39 +48,11 @@ const getLocale = (config, projectID, locale) =>
       if (res.statusCode === 401) {
         reject(new Error(MESSAGES.WRONG_TOKEN));
       }
-
       resolve(body);
     });
   });
 
-const fetchGivenLocales = (config, projectID) =>
-  new Promise((resolve, reject) => {
-    asyncLoop(
-      config.LOCALES,
-      (locale, next) => {
-        getLocale(config, projectID, locale).then(data => {
-          writeLocaleFile(locale, config, data)
-            .then(data => {
-              console.log(data);
-              next();
-            })
-            .catch(e => {
-              console.log(e);
-              next(e);
-            });
-        });
-      },
-      err => {
-        if (err) {
-          reject(err);
-        }
-        resolve();
-      }
-    );
-  });
-
 module.exports = {
   getProject,
-  getLocale,
-  fetchGivenLocales
+  fetchLocale
 };

@@ -47,7 +47,10 @@ const writeLocaleFile = (locale, config, data) =>
         reject(err);
       }
 
-      fs.writeFile(file, data, err => {
+      const writeData =
+        typeof data === 'object' ? JSON.stringify(data, null, 2) : data;
+
+      fs.writeFile(file, writeData, err => {
         if (err) {
           reject(err);
         }
