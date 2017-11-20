@@ -2,6 +2,8 @@ const request = require('request');
 const asyncLoop = require('node-async-loop');
 const {PHRASEAPP_BASEURL} = require('../constants');
 const {MESSAGES} = require('../constants');
+const {writeLocaleFile} = require('./utils');
+
 const endpoint = (endpoint, token) => ({
   url: `https://${token}@${PHRASEAPP_BASEURL}/${endpoint}`,
   json: true
@@ -59,16 +61,22 @@ const fetchGivenLocales = (config, projectID) =>
       config.LOCALES,
       (locale, next) => {
         getLocale(config, projectID, locale).then(data => {
-          console.log('=================================================================== load ' + locale);
-          console.log(data);
-          next();
+          writeLocaleFile(locale, config, data)
+            .then(data => {
+              console.log(data);
+              next();
+            })
+            .catch(e => {
+              console.log(e);
+              next(e);
+            });
         });
       },
       err => {
         if (err) {
           reject(err);
         }
-        console.log('finished');
+        resolve();
       }
     );
   });

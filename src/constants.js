@@ -2,7 +2,21 @@ const path = require('path');
 
 const PHRASEAPP_BASEURL = 'api.phraseapp.com/api/v2';
 const DEFAULT_DOWNLOAD_DIR = path.join(process.cwd(), './phraseapp');
-const SUPPORTED_FORMATS = ['react_simple_json', 'yml_symfony', 'gettext', 'wat'];
+const SUPPORTED_FORMATS = ['react_simple_json', 'yml_symfony', 'gettext'];
+const FORMATS = [
+  {
+    format: 'react_simple_json',
+    ext: '.json'
+  },
+  {
+    format: 'yml_symphony',
+    ext: '.yml'
+  },
+  {
+    format: 'gettext',
+    ext: '.mo'
+  }
+];
 
 const MESSAGES = {
   INVALID_TOKEN: 'GIMME TOKEN NAO',
@@ -15,5 +29,6 @@ module.exports = {
   PHRASEAPP_BASEURL,
   DEFAULT_DOWNLOAD_DIR,
   SUPPORTED_FORMATS,
-  MESSAGES
+  MESSAGES,
+  FORMATS
 };
