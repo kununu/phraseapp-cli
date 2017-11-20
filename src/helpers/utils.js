@@ -37,13 +37,12 @@ const mkConfig = args =>
 
 const writeLocaleFile = (locale, config, data) =>
   new Promise((resolve, reject) => {
-    const DLDIR = config.dir || DEFAULT_DOWNLOAD_DIR;
     const fileExt = FORMATS.filter(item => item.format === config.FORMAT).map(
       item => item.ext
     )[0];
-    const file = path.join(DLDIR, `${locale}${fileExt}`);
+    const file = path.join(config.DIR, `${locale}${fileExt}`);
 
-    mkdirp(DLDIR, err => {
+    mkdirp(config.DIR, err => {
       if (err) {
         reject(err);
       }
