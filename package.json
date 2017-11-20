@@ -16,7 +16,8 @@
     "colors": "^1.1.2",
     "magicli": "0.0.8",
     "request": "^2.81.0",
-    "dotenv": "4.0.0"
+    "dotenv": "4.0.0",
+    "node-async-loop": "1.2.2"
   },
   "devDependencies": {
     "ava": "^0.23.0",

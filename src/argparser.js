@@ -30,11 +30,33 @@ const parsedArgs = () => {
     metavar: 'project'
   });
 
-  cmdMain.addArgument(['-t', '--token'], {
+  cmdMain.addArgument(['--token'], {
     action: 'store',
     help: '',
     metavar: 'token'
   });
+
+  cmdMain.addArgument(['--tags'], {
+    action: 'store',
+    help: '',
+    metavar: 'tags'
+  });
+
+  cmdMain.addArgument(['-f', '--format'], {
+    action: 'store',
+    help: '',
+    metavar: 'format',
+    required: true
+  });
+
+  cmdMain.addArgument(['-l', '--locales'], {
+    action: 'store',
+    help: '',
+    metavar: 'format',
+    required: true
+  });
+
+
 
   return parser.parseArgs();
 };
