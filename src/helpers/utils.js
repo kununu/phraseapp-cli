@@ -1,7 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');
-const {DEFAULT_DOWNLOAD_DIR, MESSAGES, FORMATS} = require('../constants');
+const {
+  DEFAULT_DOWNLOAD_DIR,
+  MESSAGES,
+  FORMATS,
+  SUPPORTED_FORMATS
+} = require('../constants');
 
 const quitError = (err, code = 1) => {
   console.log(err.message);
@@ -10,7 +15,6 @@ const quitError = (err, code = 1) => {
 
 const mkConfig = args =>
   new Promise((resolve, reject) => {
-    const SUPPORTED_FORMATS = FORMATS.map(item => item.format);
     const config = {
       TOKEN: process.env.PHRASEAPP_ACCESS_TOKEN || args.token,
       PROJECT: process.env.PHRASEAPP_PROJECT || args.project,
