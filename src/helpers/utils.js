@@ -20,7 +20,7 @@ const mkConfig = args =>
       PROJECT: process.env.PHRASEAPP_PROJECT || args.project,
       DIR: args.directory || DEFAULT_DOWNLOAD_DIR,
       FORMAT: args.format,
-      TAGS: args.tags ? args.tags.split(',') : [],
+      TAG: args.tag || false,
       LOCALES: args.locales ? args.locales.split(',') : []
     };
 

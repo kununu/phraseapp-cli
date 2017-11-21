@@ -35,8 +35,9 @@ const getProject = config =>
 
 const fetchLocale = (config, projectID, locale) =>
   new Promise((resolve, reject) => {
+    const tag = config.TAG ? `&tag=${config.TAG}` : '';
     const localeEndpoint = endpoint(
-      `projects/${projectID}/locales/${locale}/download?file_format=${config.FORMAT}`, // eslint-disable-line
+      `projects/${projectID}/locales/${locale}/download?file_format=${config.FORMAT}${tag}`, // eslint-disable-line
       config.TOKEN
     );
 

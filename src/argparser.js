@@ -37,10 +37,10 @@ const parsedArgs = () => {
     metavar: 'token'
   });
 
-  cmdMain.addArgument(['--tags'], {
+  cmdMain.addArgument(['--tag'], {
     action: 'store',
-    help: 'Comma seperated list of Tags',
-    metavar: 'tags'
+    help: 'Tagname',
+    metavar: 'tag'
   });
 
   cmdMain.addArgument(['-f', '--format'], {

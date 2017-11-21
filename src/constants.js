@@ -13,7 +13,7 @@ const FORMATS = [
   },
   {
     format: 'gettext',
-    ext: '.mo'
+    ext: '.po'
   }
 ];
 
