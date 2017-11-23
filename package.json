@@ -10,8 +10,8 @@
   "license": "MIT",
   "scripts": {
     "test": "ava ./tests",
-    "build": "rimraf ./dist && pkg . --out-path ./dist/bin",
-    "build:tux": "rimraf ./dist && pkg . --out-path ./dist/bin -t latest-linux-x86"
+    "build": "rimraf ./dist && pkg . --out-path ./dist",
+    "build:tux": "rimraf ./dist && pkg . --out-path ./dist -t latest-linux-x86"
   },
   "dependencies": {
     "argparse": "1.0.9",
@@ -24,6 +24,7 @@
     "request": "^2.81.0"
   },
   "devDependencies": {
+    "dlvr": "4.0.4",
     "rimraf": "2.6.2",
     "pkg": "4.3.0-beta.1",
     "ava": "^0.23.0",

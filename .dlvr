@@ -1,0 +1,27 @@
+{
+  "dotenv": ".env",
+  "preRun": "npm run build",
+  "logfilter": ".*#",
+  "remote": "origin",
+  "githost": {
+    "provider": "github",
+    "repo": "kununu/phraseapp-cli",
+    "release": {
+      "assets": [
+        {
+          "file": "./dist/phraseapp-cli-linux",
+          "name": "phraseapp-cli-linux"
+        },
+        {
+          "file": "./dist/phraseapp-cli-macos",
+          "name": "phraseapp-cli-macos"
+        },
+        {
+          "file": "./dist/phraseapp-cli-win.exe",
+          "name": "phraseapp-cli-win.exe"
+        }
+      ]
+    }
+  },
+  "npmpublish": false
+}
