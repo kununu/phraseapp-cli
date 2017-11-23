@@ -1,6 +1,5 @@
 {
   "dotenv": ".env",
-  "preRun": "npm run build",
   "logfilter": ".*#",
   "remote": "origin",
   "githost": {
