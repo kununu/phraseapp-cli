@@ -11,7 +11,7 @@
   "scripts": {
     "test": "ava ./tests",
     "build": "rimraf ./dist && pkg . --out-path ./dist",
-    "build:tux": "rimraf ./dist && pkg . --out-path ./dist -t latest-linux-x86",
+    "build:tux": "rimraf ./dist && pkg . --output ./dist/phraseapp-cli-linux -t latest-linux-x86",
     "release": "npm run build && dlvr release auto -f"
   },
   "dependencies": {
