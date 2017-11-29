@@ -14,16 +14,24 @@ const FORMATS = [
   {
     format: 'gettext',
     ext: '.po'
+  },
+  {
+    format: 'simple_json',
+    ext: '.json'
   }
 ];
 
 const SUPPORTED_FORMATS = FORMATS.map(item => item.format);
 
 const MESSAGES = {
-  INVALID_TOKEN: 'GIMME TOKEN NAO',
-  NO_PROJECT: 'CAN I HAZ PROJECT',
-  WRONG_TOKEN: 'WRONG TOKEN',
-  WRONG_FORMAT: `Format not Supported, Supported Formats: ${SUPPORTED_FORMATS}`
+  SUCCESS: 'phraseapp-cli: Successfully downloaded locales',
+  INVALID_TOKEN: 'phraseapp-cli Error: No Phraseapp Token given',
+  NO_PROJECT: 'phraseapp-cli Error: No Project given',
+  PROJECT_NOT_FOUND: 'phraseapp-cli Error: Project not found',
+  WRONG_TOKEN: 'phraseapp-cli Error: Phraseapp Token is invalid',
+  WRONG_FORMAT: `phraseapp-cli Error: Format not Supported, Supported Formats: ${
+    SUPPORTED_FORMATS
+  }`
 };
 
 module.exports = {
