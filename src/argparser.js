@@ -25,10 +25,16 @@ const parsedArgs = () => {
     metavar: 'directory'
   });
 
-  cmdMain.addArgument(['-p', '--project'], {
+  cmdMain.addArgument(['-p', '--projectname'], {
     action: 'store',
     help: 'Projectname',
-    metavar: 'project'
+    metavar: 'projectname'
+  });
+
+  cmdMain.addArgument(['-i', '--projectid'], {
+    action: 'store',
+    help: 'Project ID',
+    metavar: 'projectid'
   });
 
   cmdMain.addArgument(['--token'], {

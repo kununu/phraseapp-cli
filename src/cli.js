@@ -2,14 +2,15 @@ require('dotenv').config();
 const parsedArgs = require('./argparser');
 const args = parsedArgs();
 const {cmdDownload} = require('./commands');
-const {quitError, mkConfig} = require('./helpers/utils');
+const {quitError, quitSuccess, mkConfig} = require('./helpers/utils');
+const {MESSAGES} = require('./constants');
 
 switch (args.subcmd) {
   case 'download':
     mkConfig(args)
       .then(config => {
         cmdDownload(config).then(data => {
-          console.log(data);
+          quitSuccess(MESSAGES.SUCCESS);
         });
       })
       .catch(e => {

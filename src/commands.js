@@ -28,9 +28,12 @@ const fetchAndSave = (config, projectID) =>
 
 const cmdDownload = async config => {
   try {
-    const projectID = await getProject(config);
+    const projectID = config.PROJECT_NAME
+      ? await getProject(config)
+      : config.PROJECT_ID;
+
     await fetchAndSave(config, projectID);
-    // convert if needed
+    return true;
   } catch (e) {
     quitError(e);
   }

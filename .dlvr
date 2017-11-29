@@ -1,5 +1,6 @@
 {
   "dotenv": ".env",
+  "preRun": "npm run build:tux",
   "logfilter": ".*#",
   "remote": "origin",
   "githost": {
@@ -10,14 +11,6 @@
         {
           "file": "./dist/phraseapp-cli-linux",
           "name": "phraseapp-cli-linux"
-        },
-        {
-          "file": "./dist/phraseapp-cli-macos",
-          "name": "phraseapp-cli-macos"
-        },
-        {
-          "file": "./dist/phraseapp-cli-win.exe",
-          "name": "phraseapp-cli-win.exe"
         }
       ]
     }
