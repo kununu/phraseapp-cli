@@ -20,12 +20,10 @@ const getProject = config =>
 
       if (res.statusCode === 200) {
         const projectID = body
-          .filter(item => item.name === config.PROJECT)
+          .filter(item => item.name === config.PROJECT_NAME)
           .map(item => item.id);
-
         if (projectID.length < 1) {
-          // TODO: show which project was not found (name)
-          reject(new Error(MESSAGES.NO_PROJECT));
+          reject(new Error(MESSAGES.PROJECT_NOT_FOUND));
         }
 
         resolve(projectID[0]);
@@ -55,5 +53,6 @@ const fetchLocale = (config, projectID, locale) =>
 
 module.exports = {
   getProject,
-  fetchLocale
+  fetchLocale,
+  endpoint
 };

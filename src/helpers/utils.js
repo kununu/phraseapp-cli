@@ -13,11 +13,17 @@ const quitError = (err, code = 1) => {
   process.exit(code);
 };
 
+const quitSuccess = (msg) => {
+  console.log(msg);
+  process.exit(0);
+};
+
 const mkConfig = args =>
   new Promise((resolve, reject) => {
     const config = {
       TOKEN: process.env.PHRASEAPP_ACCESS_TOKEN || args.token,
-      PROJECT: process.env.PHRASEAPP_PROJECT || args.project,
+      PROJECT_NAME: process.env.PHRASEAPP_PROJECT_NAME || args.projectname,
+      PROJECT_ID: process.env.PHRASEAPP_PROJECT_ID || args.projectid,
       DIR: args.directory || DEFAULT_DOWNLOAD_DIR,
       FORMAT: args.format,
       TAG: args.tag || false,
@@ -32,7 +38,7 @@ const mkConfig = args =>
       reject(new Error(MESSAGES.INVALID_TOKEN));
     }
 
-    if (!config.PROJECT) {
+    if (!config.PROJECT_NAME && !config.PROJECT_ID) {
       reject(new Error(MESSAGES.NO_PROJECT));
     }
 
@@ -64,6 +70,7 @@ const writeLocaleFile = (locale, config, data) =>
   });
 
 module.exports = {
+  quitSuccess,
   quitError,
   mkConfig,
   writeLocaleFile
