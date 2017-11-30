@@ -21,9 +21,9 @@ const quitSuccess = (msg) => {
 const mkConfig = args =>
   new Promise((resolve, reject) => {
     const config = {
-      TOKEN: process.env.PHRASEAPP_ACCESS_TOKEN || args.token,
-      PROJECT_NAME: process.env.PHRASEAPP_PROJECT_NAME || args.projectname,
-      PROJECT_ID: process.env.PHRASEAPP_PROJECT_ID || args.projectid,
+      TOKEN: args.token || process.env.PHRASEAPP_ACCESS_TOKEN,
+      PROJECT_NAME: args.projectname || process.env.PHRASEAPP_PROJECT_NAME,
+      PROJECT_ID: args.projectid || process.env.PHRASEAPP_PROJECT_ID,
       DIR: args.directory || DEFAULT_DOWNLOAD_DIR,
       FORMAT: args.format,
       TAG: args.tag || false,
