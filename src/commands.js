@@ -7,15 +7,19 @@ const fetchAndSave = (config, projectID) =>
     asyncLoop(
       config.LOCALES,
       (locale, next) => {
-        fetchLocale(config, projectID, locale).then(data => {
-          writeLocaleFile(locale, config, data)
-            .then(data => {
-              next();
-            })
-            .catch(e => {
-              next(e);
-            });
-        });
+        fetchLocale(config, projectID, locale)
+          .then(data => {
+            writeLocaleFile(locale, config, data)
+              .then(data => {
+                next();
+              })
+              .catch(e => {
+                next(e);
+              });
+          })
+          .catch(e => {
+            next(e);
+          });
       },
       err => {
         if (err) {

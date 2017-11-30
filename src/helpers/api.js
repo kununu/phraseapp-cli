@@ -44,10 +44,23 @@ const fetchLocale = (config, projectID, locale) =>
         reject(err);
       }
 
+      if (res.statusCode === 404) {
+        reject(new Error(MESSAGES.PROJECT_NOT_FOUND));
+      }
+
       if (res.statusCode === 401) {
         reject(new Error(MESSAGES.WRONG_TOKEN));
       }
-      resolve(body);
+
+      if (res.statusCode === 200) {
+        resolve(body);
+      } else {
+        reject(
+          new Error(
+            `${MESSAGES.UNKNOWN_ERROR} \n ${JSON.stringify(body, null, 2)}`
+          )
+        );;
+      }
     });
   });
 

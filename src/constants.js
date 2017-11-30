@@ -25,6 +25,7 @@ const SUPPORTED_FORMATS = FORMATS.map(item => item.format);
 
 const MESSAGES = {
   SUCCESS: 'phraseapp-cli: Successfully downloaded locales',
+  UNKNOWN_ERROR: 'phraseapp-cli Error: Unknown Error',
   INVALID_TOKEN: 'phraseapp-cli Error: No Phraseapp Token given',
   NO_PROJECT: 'phraseapp-cli Error: No Project given',
   PROJECT_NOT_FOUND: 'phraseapp-cli Error: Project not found',
