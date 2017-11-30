@@ -59,7 +59,7 @@ const fetchLocale = (config, projectID, locale) =>
           new Error(
             `${MESSAGES.UNKNOWN_ERROR} \n ${JSON.stringify(body, null, 2)}`
           )
-        );;
+        );
       }
     });
   });
