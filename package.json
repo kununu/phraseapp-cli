@@ -1,6 +1,6 @@
 {
   "name": "phraseapp-cli",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "description": "",
   "main": "index.js",
   "bin": {
@@ -24,14 +24,20 @@
     "request": "^2.81.0"
   },
   "devDependencies": {
+    "@kununu/eslint-config": "^1.0.1",
     "ava": "^0.23.0",
-    "eslint": "4.10.0",
+    "babel-eslint": "^7.2.3",
+    "eslint": "^4.18.1",
     "eslint-config-standard": "10.2.1",
-    "eslint-plugin-import": "2.8.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-flowtype": "^2.30.4",
+    "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-import-order": "2.1.4",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-node": "5.2.1",
     "eslint-plugin-prettier": "^2.3.1",
     "eslint-plugin-promise": "3.6.0",
+    "eslint-plugin-react": "^6.10.3",
     "eslint-plugin-standard": "3.0.1",
     "pkg": "4.3.0-beta.4",
     "prettier": "^1.7.4",
