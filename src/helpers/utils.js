@@ -1,11 +1,15 @@
+/* eslint-disable no-console */
+
 const fs = require('fs');
 const path = require('path');
+
 const mkdirp = require('mkdirp');
+
 const {
   DEFAULT_DOWNLOAD_DIR,
   MESSAGES,
   FORMATS,
-  SUPPORTED_FORMATS
+  SUPPORTED_FORMATS,
 } = require('../constants');
 
 const quitError = (err, code = 1) => {
@@ -27,7 +31,8 @@ const mkConfig = args =>
       DIR: args.directory || DEFAULT_DOWNLOAD_DIR,
       FORMAT: args.format,
       TAG: args.tag || false,
-      LOCALES: args.locales ? args.locales.split(',') : []
+      FALLBACK_LOCALE_ID: args.fallback_locale_id || false,
+      LOCALES: args.locales ? args.locales.split(',') : [],
     };
 
     if (SUPPORTED_FORMATS.indexOf(config.FORMAT) < 0) {
@@ -48,11 +53,11 @@ const mkConfig = args =>
 const writeLocaleFile = (locale, config, data) =>
   new Promise((resolve, reject) => {
     const fileExt = FORMATS.filter(item => item.format === config.FORMAT).map(
-      item => item.ext
+      item => item.ext,
     )[0];
     const file = path.join(config.DIR, `${locale}${fileExt}`);
 
-    mkdirp(config.DIR, err => {
+    mkdirp(config.DIR, (err) => {
       if (err) {
         reject(err);
       }
@@ -60,9 +65,9 @@ const writeLocaleFile = (locale, config, data) =>
       const writeData =
         typeof data === 'object' ? JSON.stringify(data, null, 2) : data;
 
-      fs.writeFile(file, writeData, err => {
-        if (err) {
-          reject(err);
+      fs.writeFile(file, writeData, (writeErr) => {
+        if (writeErr) {
+          reject(writeErr);
         }
         resolve(`Written: ${file}`);
       });
@@ -73,5 +78,5 @@ module.exports = {
   quitSuccess,
   quitError,
   mkConfig,
-  writeLocaleFile
+  writeLocaleFile,
 };

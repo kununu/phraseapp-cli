@@ -1,0 +1,6 @@
+{
+  "extends": "@kununu",
+  "rules": {
+    "no-restricted-syntax": ["off", ["ForOfStatement"]]
+  }
+}
