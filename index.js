@@ -5,6 +5,7 @@
 const fs = require('fs');
 
 const request = require('request');
+const colors = require('colors'); // eslint-disable-line no-unused-vars
 
 function loadConfig () {
   const configPath = `${process.cwd()}/.phraseapp.json`;
