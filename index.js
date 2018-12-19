@@ -43,7 +43,7 @@ function loadConfig () {
   return phrase;
 }
 
-function getPhraseAppQueryParams (tag, fallbackLocale) {
+function getPhraseAppQueryParams (tag, fallbackLocale, branch) {
   const queryParams = {
     file_format: 'react_simple_json',
     tag,
@@ -52,6 +52,10 @@ function getPhraseAppQueryParams (tag, fallbackLocale) {
   if (fallbackLocale) {
     queryParams.include_empty_translations = 'true';
     queryParams.fallback_locale_id = fallbackLocale;
+  }
+
+  if (branch) {
+    queryParams.branch = branch;
   }
 
   return Object.keys(queryParams)
@@ -76,7 +80,7 @@ async function loadLocale (phrase) {
           phrase.access_token
         }@api.phraseapp.com/api/v2/projects/${phrase.project_id}/locales/${
           locale.locale_id
-        }/download?${getPhraseAppQueryParams(tag, locale.fallback_locale_id)}`;
+        }/download?${getPhraseAppQueryParams(tag, locale.fallback_locale_id, phrase.branch)}`;
         request.get(url, (error, response, body) => {
           if (!error && response.statusCode === 200) {
             fs.writeFileSync(
