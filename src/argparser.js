@@ -51,6 +51,12 @@ const parsedArgs = () => {
     metavar: 'tag',
   });
 
+  cmdMain.addArgument(['--branch'], {
+    action: 'store',
+    help: 'Branch Name',
+    metavar: 'branch',
+  });
+
   cmdMain.addArgument(['-f', '--format'], {
     action: 'store',
     help: `Format of the locales, Supported: ${SUPPORTED_FORMATS}`,
