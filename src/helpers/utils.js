@@ -31,6 +31,7 @@ const mkConfig = args =>
       DIR: args.directory || DEFAULT_DOWNLOAD_DIR,
       FORMAT: args.format,
       TAG: args.tag || false,
+      BRANCH: args.branch || false,
       FALLBACK_LOCALE_ID: args.fallback_locale_id || false,
       LOCALES: args.locales ? args.locales.split(',') : [],
     };
