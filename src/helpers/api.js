@@ -35,11 +35,12 @@ const getProject = config =>
 const fetchLocale = (config, projectID, locale) =>
   new Promise((resolve, reject) => {
     const tag = config.TAG ? `&tag=${config.TAG}` : '';
+    const branch = config.BRANCH ? `&branch=${config.BRANCH}` : '';
 
     // If there is a fallback specified, include_empty_translations also needs to be set to true
     const fallback = config.FALLBACK_LOCALE_ID ? `&include_empty_translations&fallback_locale_id=${config.FALLBACK_LOCALE_ID}` : '';
     const localeEndpoint = getPhraseAppApiEndpoint(
-      `projects/${projectID}/locales/${locale}/download?file_format=${config.FORMAT}${tag}${fallback}`, // eslint-disable-line
+      `projects/${projectID}/locales/${locale}/download?file_format=${config.FORMAT}${tag}${branch}${fallback}`, // eslint-disable-line
       config.TOKEN,
     );
 
