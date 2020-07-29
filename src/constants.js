@@ -1,6 +1,6 @@
 const path = require('path');
 
-const PHRASEAPP_BASEURL = 'api.phraseapp.com/api/v2';
+const PHRASEAPP_BASEURL = 'api.phrase.com/api/v2';
 const DEFAULT_DOWNLOAD_DIR = path.join(process.cwd(), './phraseapp');
 const FORMATS = [
   {
