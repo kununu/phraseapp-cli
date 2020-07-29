@@ -1,5 +1,5 @@
 # phraseapp-cli
-> phraseapp-cli for https://phraseapp.com/
+> phraseapp-cli for https://phrase.com/
 
 ## Installation
 
@@ -56,4 +56,4 @@ Apache-2.0 © [kununu](https://kununu.com)
 
 [npm-image]: https://badge.fury.io/js/kununu.svg
 [npm-url]: https://npmjs.org/package/kununu
-[phraseapp-config]: https://phraseapp.com/docs/developers/cli/configuration/
+[phraseapp-config]: https://help.phrase.com/help/phrase-for-developers
