@@ -12,10 +12,9 @@ ENV PATH=$PATH:${code_dir}/node_modules/.bin
 
 RUN apt update && apt install --no-install-recommends -y \
       # npm needs ca-certificates
-      wget ca-certificates \
-      # we want to strip the debugging from the binary
-      binutils && \
+      wget ca-certificates && \
     wget -O nodejs.deb https://deb.nodesource.com/node_${nodejs_major_version}.x/pool/main/n/nodejs/nodejs_${nodejs_major_version}.${nodejs_minor_version}-deb-1nodesource1_${BUILDARCH}.deb && \
+    #wget -O nodejs.deb -q https://deb.nodesource.com/node_${nodejs_major_version}.x/pool/main/n/nodejs/nodejs_${nodejs_major_version}.${nodejs_minor_version}-deb-1nodesource1_${BUILDARCH}.deb && \
     apt install -y ./nodejs.deb && \
     rm nodejs.deb && \
     mkdir -p /output/usr/local/bin && \
@@ -29,8 +28,7 @@ WORKDIR $code_dir
 COPY . /code
 
 RUN npm install && \
-    pkg . --output=/output/usr/local/bin/phraseapp-cli -t host && \
-    strip /output/usr/local/bin/phraseapp-cli
+    pkg . --output=/output/usr/local/bin/phraseapp-cli -t host
 
 ##
 ## Our completed image
