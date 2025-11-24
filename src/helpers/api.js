@@ -1,5 +1,3 @@
-const request = require('request');
-
 const {PHRASEAPP_BASEURL} = require('../constants');
 const {MESSAGES} = require('../constants');
 
@@ -8,32 +6,40 @@ const getPhraseAppApiEndpoint = (endpoint, token) => ({
   json: true,
 });
 
-const getProject = config =>
-  new Promise((resolve, reject) => {
-    request.get(getPhraseAppApiEndpoint('projects', config.TOKEN), (err, res, body) => {
-      if (err) {
-        reject(err);
-      }
-
-      if (res.statusCode === 401) {
-        reject(new Error(MESSAGES.INVALID_TOKEN));
-      }
-
-      if (res.statusCode === 200) {
-        const projectID = body
-          .filter(item => item.name === config.PROJECT_NAME)
-          .map(item => item.id);
-        if (projectID.length < 1) {
-          reject(new Error(MESSAGES.PROJECT_NOT_FOUND));
-        }
-
-        resolve(projectID[0]);
+const getProject = async config => {
+  try {
+    const endpoint = getPhraseAppApiEndpoint('projects', config.TOKEN);
+    const response = await fetch(endpoint.url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
       }
     });
-  });
 
-const fetchLocale = (config, projectID, locale) =>
-  new Promise((resolve, reject) => {
+    if (response.status === 401) {
+      throw new Error(MESSAGES.INVALID_TOKEN);
+    }
+
+    if (response.status === 200) {
+      const body = await response.json();
+      const projectID = body
+        .filter(item => item.name === config.PROJECT_NAME)
+        .map(item => item.id);
+      if (projectID.length < 1) {
+        throw new Error(MESSAGES.PROJECT_NOT_FOUND);
+      }
+
+      return projectID[0];
+    }
+
+    throw new Error(`Unexpected status code: ${response.status}`);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const fetchLocale = async (config, projectID, locale) => {
+  try {
     const tag = config.TAG ? `&tag=${config.TAG}` : '';
     const branch = config.BRANCH ? `&branch=${config.BRANCH}` : '';
 
@@ -44,30 +50,33 @@ const fetchLocale = (config, projectID, locale) =>
       config.TOKEN,
     );
 
-    request.get(localeEndpoint, (err, res, body) => {
-      if (err) {
-        reject(err);
-      }
-
-      if (res.statusCode === 404) {
-        reject(new Error(MESSAGES.PROJECT_NOT_FOUND));
-      }
-
-      if (res.statusCode === 401) {
-        reject(new Error(MESSAGES.WRONG_TOKEN));
-      }
-
-      if (res.statusCode === 200) {
-        resolve(body);
-      } else {
-        reject(
-          new Error(
-            `${MESSAGES.UNKNOWN_ERROR} \n ${JSON.stringify(body, null, 2)}`,
-          ),
-        );
+    const response = await fetch(localeEndpoint.url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
       }
     });
-  });
+
+    if (response.status === 404) {
+      throw new Error(MESSAGES.PROJECT_NOT_FOUND);
+    }
+
+    if (response.status === 401) {
+      throw new Error(MESSAGES.WRONG_TOKEN);
+    }
+
+    if (response.status === 200) {
+      return await response.text();
+    } else {
+      const body = await response.text();
+      throw new Error(
+        `${MESSAGES.UNKNOWN_ERROR} \n ${body}`,
+      );
+    }
+  } catch (error) {
+    throw error;
+  }
+};
 
 module.exports = {
   getProject,

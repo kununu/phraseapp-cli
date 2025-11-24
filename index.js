@@ -4,7 +4,6 @@
 
 const fs = require('fs');
 
-const request = require('request');
 const colors = require('colors'); // eslint-disable-line no-unused-vars
 
 function loadConfig () {
@@ -75,43 +74,52 @@ async function loadLocale (phrase) {
     const tags = locale.tags || [false];
 
     for (const tag of tags) {
-      await new Promise((resolve, reject) => {
+      try {
         const url = `https://${
           phrase.access_token
         }@api.phraseapp.com/api/v2/projects/${phrase.project_id}/locales/${
           locale.locale_id
         }/download?${getPhraseAppQueryParams(tag, locale.fallback_locale_id, phrase.branch)}`;
-        request.get(url, (error, response, body) => {
-          if (!error && response.statusCode === 200) {
-            fs.writeFileSync(
-              filepath,
-              JSON.stringify(Object.assign(file, JSON.parse(body)), null, '\t'),
-            );
-            console.info(
-              `Success: locale file [${locale.locale_id}.json]${
-                tag ? ` for tag ${tag} ` : ' '
-              }was updated`.green.bold,
-            );
-            resolve();
-          } else {
-            if (response.statusCode !== 401) {
-              console.error(
-                `Error: locale file [${locale.locale_id}.json] error message: ${
-                  JSON.parse(body).message
-                }`.red.bold,
-              );
-            } else {
-              console.error('Error: Please check your access_token'.red.bold);
-            }
-            reject(response);
+        
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json'
           }
         });
-      });
+        
+        if (response.status === 200) {
+          const body = await response.text();
+          fs.writeFileSync(
+            filepath,
+            JSON.stringify(Object.assign(file, JSON.parse(body)), null, '\t'),
+          );
+          console.info(
+            `Success: locale file [${locale.locale_id}.json]${
+              tag ? ` for tag ${tag} ` : ' '
+            }was updated`.green.bold,
+          );
+        } else {
+          if (response.status !== 401) {
+            const body = await response.text();
+            const errorMessage = JSON.parse(body).message;
+            console.error(
+              `Error: locale file [${locale.locale_id}.json] error message: ${errorMessage}`.red.bold,
+            );
+          } else {
+            console.error('Error: Please check your access_token'.red.bold);
+          }
+          throw new Error(`HTTP ${response.status}`);
+        }
+      } catch (error) {
+        console.error(`Failed to fetch locale ${locale.locale_id}:`, error.message);
+        // Continue with next tag instead of stopping completely
+      }
     }
   }
 }
 
-function loadLocalesFromConfig () {
+async function loadLocalesFromConfig () {
   // load phraseapp config
   const phrase = loadConfig();
 
@@ -121,7 +129,10 @@ function loadLocalesFromConfig () {
   }
 
   // Update configs from phraseapp cli
-  loadLocale(phrase);
+  await loadLocale(phrase);
 }
 
-loadLocalesFromConfig();
+loadLocalesFromConfig().catch(error => {
+  console.error('Error loading locales:', error);
+  process.exit(1);
+});
